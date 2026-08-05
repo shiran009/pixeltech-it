@@ -250,7 +250,7 @@ export const Home: React.FC = () => {
                 <Phone size={24} className="contact-detail-icon" />
                 <div className="contact-detail-content">
                   <h5>Call Us Directly</h5>
-                  <p>+1 (800) 555-PIXL<br />Mon - Fri, 9:00 AM - 6:00 PM EST</p>
+                  <p>+94 778 65 61 61<br />Mon - Fri, 9:00 AM - 6:00 PM EST</p>
                 </div>
               </Card>
 
