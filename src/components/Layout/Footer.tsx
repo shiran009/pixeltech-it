@@ -86,6 +86,10 @@ export const Footer: React.FC = () => {
                 <span>+94 778 65 61 61</span>
               </div>
               <div className="footer-contact-item">
+               <Phone size={16} className="gradient-text" />
+                   <span>+94 778 65 61 61</span>
+                  </div>
+              <div className="footer-contact-item">
                 <Mail size={16} className="gradient-text" />
                 <span>info@pixeltech-it.com</span>
               </div>
