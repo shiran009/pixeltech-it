@@ -87,7 +87,7 @@ export const Footer: React.FC = () => {
               </div>
               <div className="footer-contact-item">
                <Phone size={16} className="gradient-text" />
-                   <span>+94 778 65 61 61</span>
+                   <span>+94 772 86 51 79</span>
                   </div>
               <div className="footer-contact-item">
                 <Mail size={16} className="gradient-text" />
