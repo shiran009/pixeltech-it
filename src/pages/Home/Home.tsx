@@ -12,6 +12,8 @@ export const Home: React.FC = () => {
   });
   
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -21,19 +23,37 @@ export const Home: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
-    
-    // Simulate API Form Submission
-    console.log('Sending Form Data:', formData);
-    setIsSubmitted(true);
 
-    // Reset Form
-    setTimeout(() => {
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('https://huxnogr25z6jnbnecbr3lwkkka0ilqnw.lambda-url.ap-southeast-2.on.aws/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
-      setIsSubmitted(false);
-    }, 5000);
+      setTimeout(() => {
+        setIsSubmitted(false);
+      }, 6000);
+    } catch (err) {
+      console.error('Error submitting form to DynamoDB:', err);
+      setErrorMessage('Could not send message. Please try again or email us directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -228,8 +248,14 @@ export const Home: React.FC = () => {
                     ></textarea>
                   </div>
 
-                  <Button type="submit" variant="primary" fullWidth>
-                    Send Message
+                  {errorMessage && (
+                    <p style={{ color: '#f87171', fontSize: '0.9rem', marginBottom: '1rem', textAlign: 'center' }}>
+                      {errorMessage}
+                    </p>
+                  )}
+
+                  <Button type="submit" variant="primary" fullWidth disabled={isSubmitting}>
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
                     <Send size={16} />
                   </Button>
                 </form>
